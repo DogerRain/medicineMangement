@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+#searchWin>div,#updateWin>form>*,#addWin>form>*{
+	text-align:center;
+}
+#updateWin{
+	text-align:center;
+}
+button#search {
+    width: 150px;
+    height: 35px;
+}
+#updateWin table,#addWin table,#searchWin table{
+margin: auto;
+	
+}
+.easyui-layout>div{
+	margin: auto;
+}
+#delForm{
+	margin: auto;
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medicine.mapper.YpxxMapper">
+	<select id="get" resultType="po.Ypxx" parameterType="int">
+		SELECT * FROM YPXX
+		WHERE YPBM=#{yPBM}
+	</select>
+	<select id="find" resultType="po.Ypxx" parameterType="map">
+		SELECT * FROM YPXX
+		
+	</select>
+	<select id="findPage" resultType="po.Ypxx"  parameterType="pagination.Page">
+		SELECT * FROM ypxx
+		<where>
+			<if test="params.yPMC!=null">
+				AND YPMC LIKE #{params.yPMC}
+			</if>
+			<if test="params.yPSJ1!=null">
+				AND YPSJ &gt;=#{params.yPSJ1}
+			</if>
+			<if test="params.yPSJ2!=null">
+				AND YPSJ &lt;=#{params.yPSJ2}
+			</if>
+			<if test="params.yXRQ1!=null">
+				AND YXRQ &gt;=#{params.yXRQ1}
+			</if>
+			<if test="params.yXRQ2!=null">
+				AND YXRQ &lt;=#{params.yXRQ2}
+			</if>
+			<if test="params.yPJX!=null">
+				AND YPJX = #{params.yPJX}
+			</if>
+			<if test="params.yPBM!=null">
+				AND YPBM = #{params.yPBM}
+			</if>
+		</where>
+	</select>
+	<update id="update" parameterType="po.Ypxx">
+		UPDATE YPXX
+		SET YPMC=#{yPMC},YPJX=#{yPJX},YPSJ=#{yPSJ},YXRQ=#{yXRQ}
+		WHERE YPBM=#{yPBM}
+			
+	</update>
+	<insert id="insert" parameterType="po.Ypxx">
+		INSERT INTO YPXX
+		VALUES(#{yPBM},#{yPMC},#{yPJX},#{yPSJ},#{yXRQ})
+	</insert>
+	<delete id="delete"  parameterType="Integer[]">
+		DELETE FROM YPXX
+		<where>
+			YPBM
+			 <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+            	#{id}  
+        	</foreach>  
+		</where>	
+	</delete>
+</mapper>

@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- 先引入 jquery的 js -->
+	<script type="text/javascript" src="easyui/js/jquery-1.8.0.min.js">
+	</script>
+	<!-- 引入 easyui的js -->
+	<script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+	<!-- 引入国际化 js -->
+	<script type="text/javascript" src="easyui/js/locale/easyui-lang-zh_CN.js"></script>
+	<!-- 引入 默认样式 css -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/default/easyui.css" />
+	<!-- 引入 icon图标 css  -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/icon.css" />
+	<link rel="stylesheet" type="text/css" href="easyui/ztree/zTreeStyle.css" />
+	<link rel="stylesheet" type="text/css" href="css/center.css" />
+	<script type="text/javascript" src="easyui/ztree/jquery.ztree.all-3.5.js"></script>
+	<title>药品出库信息</title>
+</head>
+
+<body class="easyui-layout">
+	<div id="searchWin" class="easyui-window" title="查找" data-options="iconCls:'icon-search',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+
+		<div region="center">
+			<div class="easyui-panel" title="" style="width:400px"></div>
+
+			<table cellpadding="5">
+				<tr>
+					<td>入库ID:</td>
+					<td>
+						<input id="ckid" class="easyui-textbox" type="text" name="ckid" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品编码：</td>
+					<td>
+						<input id="ypbm" class="easyui-textbox" type="text" name="ypbm" data-options="required:true,validType:'email'" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品名称：</td>
+					<td>
+						<input id="ypmc" class="easyui-textbox" type="text" name="ypmc" data-options="required:true,validType:'email'" />
+					</td>
+				</tr>
+
+				<tr>
+					<td>出库量(min):</td>
+					<td>
+						<input id="sl1" class="easyui-textbox" type="text" name="sl1" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>出库量(max):</td>
+					<td>
+						<input id="sl2" class="easyui-textbox" type="text" name="sl2" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>职工编码:</td>
+					<td>
+						<input id="zgbm" class="easyui-textbox" type="text" name="zgbm" data-options="required:true" />
+					</td>
+				</tr>
+
+				<tr>
+					<td>出库日期(开始):</td>
+					<td>
+						<input id="ckrq1" class="easyui-datetimebox" type="text" name="ckrq1" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>出库日期(结束):</td>
+					<td>
+						<input id="ckrq2" class="easyui-datetimebox" type="text" name="ckrq2" data-options="required:true" />
+					</td>
+				</tr>
+
+
+
+			</table>
+			<input id="page" name="page" value="1" type="hidden" />
+			<button href="#" class="easyui-linkbutton"  type="submit" id="search">查找</button>
+
+		</div>
+
+	</div>
+	<div id="updateWin" class="easyui-window" title="修改" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+		<form action="updateCkxx">
+			<div region="center">
+				<div class="easyui-panel" title="" style="width:400px"></div>
+
+				<table cellpadding="5">
+					<tr>
+						<td>出库ID:</td>
+						<td>
+							<input id="ckid" class="easyui-textbox" type="text" name="ckid" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品编码:</td>
+						<td>
+							<input id="ypbm" class="easyui-textbox" type="text" name="ypbm" data-options="required:true" />
+							<!-- <input id="ypbm" class="easyui-combobox" name="ypbm"
+							data-options="valueField:'ypbm',textField:'ypbm',url:'findAllYpxx'"> -->
+						</td>
+					</tr>
+					<tr>
+						<td>药品名称：</td>
+						<td>
+							<input id="ypmc" class="easyui-textbox" type="text" name="ypmc" data-options="required:true,validType:'email'" />
+						</td>
+					</tr>
+					<tr>
+						<td>出库量:</td>
+						<td>
+							<input id="sl" class="easyui-textbox" type="text" name="sl" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>职工编码:</td>
+						<td>
+							<input id="zgbm" class="easyui-textbox" type="text" name="zgbm" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>出库日期：</td>
+						<td>
+							<input id="ckrq" class="easyui-datetimebox" type="text" name="ckrq" data-options="required:true" />
+						</td>
+					</tr>
+				</table>
+				<input id="page" name="page" value="1" type="hidden" />
+				<button href="#" class="easyui-linkbutton"  type="submit" id="search">修改</button>
+
+			</div>
+		</form>
+
+	</div>
+	<div id="addWin" class="easyui-window" title="增加" data-options="iconCls:'icon-add',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+		<form action="addCkxx">
+			<div region="center">
+				<div class="easyui-panel" title="" style="width:400px"></div>
+
+				<table cellpadding="5">
+					<!-- <tr>
+						<td>入库id:</td>
+						<td>
+							<input id="ckid" class="easyui-textbox" type="text" name="ckid" data-options="required:true" />
+						</td>
+					</tr> -->
+					<tr>
+						<td>药品编码:</td>
+						<td>
+							<input id="ypbm" class="easyui-textbox" type="text" name="ypbm" data-options="required:true" /><label id="checkypbm"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>药品名称：</td>
+						<td>
+							<input id="ypmc" class="easyui-textbox" type="text" name="ypmc" data-options="required:true,validType:'email'" />
+						</td>
+					</tr>
+					<tr>
+						<td>入库量:</td>
+						<td>
+							<input id="sl" class="easyui-textbox" type="text" name="sl" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>职工编码:</td>
+						<td>
+							<input id="zgbm" class="easyui-textbox" type="text" name="zgbm" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>入库日期:</td>
+						<td>
+							<input id="ckrq" class="easyui-datetimebox" type="text" name="ckrq" data-options="required:true" />
+						</td>
+					</tr>
+				</table>
+				<input id="page" name="page" value="1" type="hidden" />
+				<button href="#" class="easyui-linkbutton"  type="submit" id="search">增加</button>
+
+			</div>
+		</form>
+
+	</div>
+
+	<div region="center" style="height:400px">
+		<form action="delCkxx" method="get" id="delForm" style="height:400px">
+			<table id="dg" class="easyui-datagrid"></table>
+			<input name="ids" id="ids" type="hidden" />
+		</form>
+	</div>
+
+
+
+</body>
+<script>
+	function myformatter(date) {
+		var y = date.getFullYear();
+		var m = date.getMonth() + 1;
+		var d = date.getDate();
+		return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+	}
+
+	function myparser(s) {
+		if (!s) return new Date();
+		var ss = (s.split('-'));
+		var y = parseInt(ss[0], 10);
+		var m = parseInt(ss[1], 10);
+		var d = parseInt(ss[2], 10);
+		if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+			return new Date(y, m - 1, d);
+		} else {
+			return new Date();
+		}
+	}
+	function arrayToString(array, zd) {
+		var sum = '';
+		for (var i = 0; i < array.length; ++i) {
+			sum = sum + array[i][zd];
+			if (i < array.length - 1)
+				sum = sum + ',';
+		}
+		return sum;
+	}
+
+</script>
+<script>
+	var curr_time = new Date();
+	//	$('#yXRQ1').datebox('setValue', myformatter(curr_time));	
+	//	$('#yXRQ2').datebox('setValue', myformatter(curr_time));	
+
+	function doSearch() {
+		$('#dg').datagrid('load', {
+			good: '11'
+		});
+	}
+	function doDelete() {
+		// 先判断 用户是否选择
+		var array = $('#dg').datagrid('getSelections');
+		if(array==null||array.length==0)
+		{
+			  $.messager.alert('警告','请选择删除的列','info');
+		return;
+		}
+				
+		var ids = arrayToString(array, 'ckid');
+		if(confirm("确定删除？")){
+			$('#ids').val(ids);
+			$("#delForm").submit();
+			}
+	}
+	var editrow = undefined;
+	$('#dg').datagrid({
+		fit: true,
+		url: 'Ckxx',
+		pagePosition: "bottom",
+		border: false,
+		rownumbers: true,
+		columns: [[
+			{
+				field: 'ckid',
+				title: '出库id',
+				checkbox: true,
+				width: 100
+			},
+			{
+				field: 'ypbm',
+				title: '药品编码',
+				width: 100
+
+			},
+			{
+				field: 'ypmc',
+				title: '药品名称',
+				width: 100
+
+
+			},
+			{
+				field: 'sl',
+				title: '出库量',
+				width: 100
+
+			},
+			{
+				field: 'zgbm',
+				title: '职工编码',
+				width: 200
+			},
+			{
+				field: 'ckrq',
+				title: '出库日期',
+				width: 200,
+				formatter: function (value, row, index) {
+					if(value==null) return null;
+					var unixTimestamp = new Date(value.time);
+					return unixTimestamp.toLocaleString();
+				}
+			}
+		]],
+		queryParams: {
+			ckid: $("#ckid").val(),
+			ypbm: $("#ypbm").val(),
+			ypmc: $("#ypmc").val(),
+			sl1: $('#sl1').val(),
+			sl2: $('#sl2').val(),
+			zgbm: $('#zgbm').val(),
+			ckrq1: $('#ckrq1').val(),
+			ckrq2: $('#ckrq2').val()
+		},
+		toolbar: [{
+			iconCls: 'icon-add',
+			handler: function () {
+				$("#addWin").window('open')
+			}
+		},  {
+			iconCls: 'icon-cancel',
+			handler: function () {
+				doDelete();
+			}
+		}, {
+			iconCls: 'icon-search',
+			handler: function () {
+				$("#searchWin").window('open');
+			}
+		}],
+		pageList: [5, 10],
+		idField: "ckid",
+		pagination: true,
+		onDblClickRow: function (rowIndex, rowData) {
+			$("#updateWin").window('open');
+			$('#updateWin #ckid').val(rowData.ckid)
+			$('#updateWin #ypbm').val(rowData.ypbm)
+			$('#updateWin #ypmc').val(rowData.ypmc)
+			$('#updateWin #zgbm').val(rowData.zgbm)
+			$('#updateWin #sl').val(rowData.sl)
+			var unixTimestamp = new Date(rowData.ckrq.time);
+
+			$('#updateWin #ckrq').datebox('setValue', unixTimestamp.toLocaleString());
+
+		}
+
+	});
+</script>
+<script type="text/javascript">
+	$('#search').click(function () {
+		console.log($('#ckrq1').val())
+		$('#dg').datagrid('load', {
+			ckid: $("#ckid").val(),
+			ypbm: $("#ypbm").val(),
+			ypmc: $("#ypmc").val(),
+			sl1: $('#sl1').val(),
+			sl2: $('#sl2').val(),
+			zgbm: $('#zgbm').val(),
+			ckrq1: $('#ckrq1').datebox('getValue'),
+			ckrq2: $('#ckrq2').datebox('getValue')
+		});
+	})
+</script>
+<script>
+//检查药品编码
+$("#addWin #ypbm").blur(function (e) { 
+	e.preventDefault();
+	$.ajax({
+		type: "GET",
+		url: "checkypbm",
+		data: "ypbm="+$('#addWin #ypbm').val(),
+		success: function (response) {
+			$('#checkypbm').html(response)
+		}
+	});
+});
+
+	
+
+
+
+</script>
+
+</html>

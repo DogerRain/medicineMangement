@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medicine.mapper.CkxxMapper">
+	<select id="get" resultType="po.Ckxx" parameterType="int" flushCache="true" >
+		SELECT * FROM CKXX
+		WHERE ckid=#{ckid}
+	</select>
+	
+	<select id="findPage" resultType="po.Ckxx"  parameterType="pagination.Page">
+		SELECT * FROM CKXX
+		<where>
+			<if test="params.zgbm!=null">
+				AND ZGBM = #{params.zgbm}
+			</if>
+			<if test="params.ypmc!=null">
+				AND YPMC LIKE #{params.ypmc}
+			</if>
+			<if test="params.sl1!=null">
+				AND SL &gt;=#{params.sl1}
+			</if>
+			<if test="params.rKL2!=null">
+				AND SL &lt;=#{params.sl2}
+			</if>
+			<if test="params.ckrq1!=null">
+				AND CKRQ &gt;=#{params.ckrq1}
+			</if>
+			<if test="params.ckrq2!=null">
+				AND CKRQ &lt;=#{params.ckrq2}
+			</if>
+			<if test="params.ypbm!=null">
+				AND YPBM = #{params.ypbm}
+			</if>
+		</where>
+	</select>
+	<update id="update" parameterType="po.Ckxx">
+		UPDATE CKXX
+		SET YPBM=#{ypbm},YPMC=#{ypmc},SL=#{sl},CKRQ=#{ckrq},ZGBM=#{zgbm}
+		WHERE CKID=#{ckid}
+			
+	</update>
+	<insert id="insert" parameterType="po.Ckxx">
+	<selectKey keyProperty="ckid" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+		INSERT INTO CKXX(YPBM,YPMC,SL,ZGBM,CKRQ)
+		VALUES(#{ypbm},#{ypmc},#{sl},#{zgbm},#{ckrq})
+	</insert>
+	<delete id="delete"  parameterType="Integer[]">
+		DELETE FROM CKXX
+		<where>
+			CKID
+			 <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+            	#{id}  
+        	</foreach>  
+		</where>	
+	</delete>
+	
+	
+</mapper>

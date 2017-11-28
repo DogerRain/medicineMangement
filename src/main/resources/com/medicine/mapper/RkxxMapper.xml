@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medicine.mapper.RkxxMapper">
+	<select id="get" resultType="po.Rkxx" parameterType="int" flushCache="true" >
+		SELECT * FROM RKXX
+		WHERE RKID=#{RKID}
+	</select>
+	
+	<select id="findPage" resultType="po.Rkxx"  parameterType="pagination.Page">
+		SELECT * FROM RKXX
+		<where>
+			<if test="params.zGBM!=null">
+				AND ZGBM = #{params.zGBM}
+			</if>
+			<if test="params.yPMC!=null">
+				AND YPMC LIKE #{params.yPMC}
+			</if>
+			<if test="params.rKL1!=null">
+				AND RKL &gt;=#{params.rKL1}
+			</if>
+			<if test="params.rKL2!=null">
+				AND RKL &lt;=#{params.rKL2}
+			</if>
+			<if test="params.rKRQ1!=null">
+				AND RKRQ &gt;=#{params.rKRQ1}
+			</if>
+			<if test="params.rKRQ2!=null">
+				AND RKRQ &lt;=#{params.rKRQ2}
+			</if>
+			<if test="params.yPBM!=null">
+				AND YPBM = #{params.yPBM}
+			</if>
+		</where>
+	</select>
+	<update id="update" parameterType="po.Rkxx">
+		UPDATE RKXX
+		SET YPBM=#{yPBM},YPMC=#{yPMC},RKL=#{rKL},RKRQ=#{rKRQ},ZGBM=#{zGBM}
+		WHERE RKID=#{rKID}
+			
+	</update>
+	<insert id="insert" parameterType="po.Rkxx">
+	<selectKey keyProperty="rKID" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+		INSERT INTO RKXX(YPBM,YPMC,RKL,ZGBM,RKRQ)
+		VALUES(#{yPBM},#{yPMC},#{rKL},#{zGBM},#{rKRQ})
+	</insert>
+	<delete id="delete"  parameterType="Integer[]">
+		DELETE FROM RKXX
+		<where>
+			RKID
+			 <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+            	#{id}  
+        	</foreach>  
+		</where>	
+	</delete>
+	
+	
+</mapper>

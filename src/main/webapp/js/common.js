@@ -1,0 +1,1 @@
+var commonIp='localhost:8080';

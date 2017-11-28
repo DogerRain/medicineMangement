@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- 先引入 jquery的 js -->
+	<script type="text/javascript" src="./js/jquery-1.8.0.min.js">
+	</script>
+	<!-- 引入 easyui的js -->
+	<script type="text/javascript" src="./js/jquery.easyui.min.js"></script>
+	<!-- 引入国际化 js -->
+	<script type="text/javascript" src="./js/locale/easyui-lang-zh_CN.js"></script>
+	<!-- 引入 默认样式 css -->
+	<link rel="stylesheet" type="text/css" href="./js/themes/default/easyui.css" />
+	<!-- 引入 icon图标 css  -->
+	<link rel="stylesheet" type="text/css" href="./js/themes/icon.css" />
+	<link rel="stylesheet" type="text/css" href="./ztree/zTreeStyle.css" />
+	<script type="text/javascript" src="./ztree/jquery.ztree.all-3.5.js"></script>
+	<title>Insert title here</title>
+</head>
+
+<body class="easyui-layout">
+	<div id="uodateWin" class="easyui-window" title="Update" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="width:400px;height:500px" collapsible="false" minimizable="false">
+		<form id="ff" method="post">
+			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
+				<div class="datagrid-toolbar">
+					<a id="save" icon="icon-save" href="javascript:commitStandardForm();" class="easyui-linkbutton" plain="true">保存</a>
+				</div>
+			</div>
+			<div region="center">
+				<div class="easyui-panel" title="New Topic" style="width:400px"></div>
+				<form id="ff" method="post">
+					<table cellpadding="5">
+						<tr>
+							<td>Name:</td>
+							<td>
+								<input class="easyui-textbox" type="text" name="name" data-options="required:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>price:</td>
+							<td>
+								<input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>dead:</td>
+							<td>
+								<input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>child:</td>
+							<td>
+								<input class="easyui-datebox" data-options="sharedCalendar:'#cc'">
+							</td>
+						</tr>
+						
+					</table>
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">Search</a>
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">Print</a>
+
+			</div>
+			</form>
+	</div>
+	<div id="win" class="easyui-window" title="My Window" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="width:400px;height:500px" collapsible="false" minimizable="false">
+		<form id="ff" method="post">
+			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
+				<div class="datagrid-toolbar">
+					<a id="save" icon="icon-save" href="javascript:commitStandardForm();" class="easyui-linkbutton" plain="true">保存</a>
+				</div>
+			</div>
+			<div region="center">
+				<div class="easyui-panel" title="New Topic" style="width:400px"></div>
+				<form id="ff" method="post">
+					<table cellpadding="5">
+						<tr>
+							<td>Name:</td>
+							<td>
+								<input class="easyui-textbox" type="text" name="name" data-options="required:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>Email:</td>
+							<td>
+								<input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>Subject:</td>
+							<td>
+								<input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>birthday:</td>
+							<td>
+								<input class="easyui-datebox" data-options="sharedCalendar:'#cc'">
+							</td>
+						</tr>
+						<tr>
+							<td>course</td>
+							<td>
+								<select class="easyui-combobox" name="state">
+									<option value="AL">Alabama</option>
+									<option value="AL1">111</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">Search</a>
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">Print</a>
+
+			</div>
+			</form>
+	</div>
+	<div data-options="region:'north',title:'North Title',split:true" style="height:100px;"></div>
+	<div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>
+	<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>
+	<div data-options="region:'west',title:'West',split:true" style="width:100px;">
+		<!-- 折叠面板  -->
+		<!-- fit属性，使当前div大小占满父容器  -->
+		<div class="easyui-accordion" data-options="fit:true">
+			<!-- 通过iconCls 设置图标，找 icon.css中 类定义 -->
+			<div data-options="title:'基本功能',iconCls:'icon-mini-add'">面板一</div>
+			<!-- 这里每个div就是一个面板 -->
+			<div data-options="title:'高级功能'">面板二</div>
+			<div data-options="title:'管理员功能'">
+				<ul id="treeDemo" class="ztree"></ul>
+			</div>
+		</div>
+	</div>
+	<div data-options="region:'center'">
+		<!-- 选项卡面板 -->
+		<div class="easyui-tabs" data-options="fit:true" id="tt">
+			<div data-options="title:'选项卡一',closable:true">
+				<div region="center" style="height:400px">
+					<form action="http://www.baidu.com" method="post" id="delForm" style="height:400px">
+						<table id="dg" class="easyui-datagrid"></table>
+					</form>
+				</div>
+			</div>
+			<!-- 这里每个div 就是一个选项卡 -->
+			<!-- closeable 可关闭 -->
+			<div data-options="title:'选项卡二',closable:true">内容二</div>
+			<div data-options="title:'选项卡三',closable:true">内容三</div>
+		</div>
+	</div>
+</body>
+<script>
+	function doSearch() {
+		$('#dg').datagrid('load', {
+			good: '11'
+		});
+	}
+	function doDelete() {
+		// 先判断 用户是否选择
+		var array = $('#dg').datagrid('getSelections');
+		$("#delForm").submit();
+	}
+	var editrow = undefined;
+	$('#dg').datagrid({
+		fit: true,
+		url: 'data.json',
+		pagePosition: "bottom",
+		border: false,
+		rownumbers: true,
+		columns: [[
+			{
+				field: 'code',
+				title: 'Code',
+				checkbox: true,
+				width: 100
+			},
+			{
+				field: 'name',
+				title: 'Name',
+				width: 100,
+				editor: {
+					type: 'validatebox', // 编辑器类型
+					options: { // 编辑器属性
+						required: true
+					}
+				}
+			},
+			{
+				field: 'price',
+				title: 'Price',
+				width: 100,
+				editor: {
+					type: 'validatebox', // 编辑器类型
+					options: { // 编辑器属性
+						required: true
+					}
+				}
+			},
+			{
+				field: 'dead',
+				title: 'dead',
+				width: 100,
+				formatter: function (value, row, index) {
+					if (row.dead == 1) {
+						return 'yes';
+					} else {
+						return 'no';
+					}
+				}
+			},
+			{
+				field: 'child',
+				title: 'child',
+				width: 100,
+				editor: {
+					type: 'combobox',
+					options: { data: [{ id: 1, name: "math" }, { id: 2, name: "english" }], valueField: "id", textField: "name" }
+				},
+				formatter: function (value, row, index) {
+					return row.child.name;
+				}
+			}
+		]],
+		queryParams: {
+			name: 'easyui',
+			subject: 'datagrid'
+		},
+		toolbar: [{
+			iconCls: 'icon-edit',
+			handler: function () { alert('edit') }
+		}, {
+			iconCls: 'icon-add',
+			handler: function () {
+				$("#win").window('open')
+			}
+		}, {
+			iconCls: 'icon-save',
+			handler: function () {
+				//	alert(editrow)
+				// 索引1 代表第二行
+				var rs = $('#dg').datagrid('getRows');
+				var array = [{ id: 1, name: "math" }, { id: 2, name: "english" }];
+				for (var i = 0; i < array.length; ++i)
+					if (array[i].id == rs[editrow].child) {
+						rs[editrow].child = array[i];
+						break;
+					}
+				$('#dg').datagrid('endEdit', editrow);
+				alert(rs[editrow].code + " " + rs[editrow].name + " " + rs[editrow].child);
+				editrow = undefined;
+			}
+		}, {
+			iconCls: 'icon-cancel',
+			handler: function () {
+				doDelete();
+			}
+		}, {
+			iconCls: 'icon-search',
+			handler: function () {
+				alert("dd")
+				doSearch();
+				alert('www')
+			}
+		}],
+		pageList: [5, 6],
+		idField: "code",
+		pagination: true,
+		onDblClickRow: function (rowIndex, rowData) {
+			if (editrow != undefined)
+				$('#dg').datagrid('cancelEdit', editrow);// 索引1 代表第二行
+			editrow = rowIndex;
+			$('#dg').datagrid('beginEdit', rowIndex);
+		}
+	});
+</script>
+<script type="text/javascript">
+	var x = 1;
+	var oc = function (event, treeId, treeNode, clickFlag) {
+		console.log(treeNode)
+		var content = '<div style="width:100%;height:100%;overflow:hidden;">'
+			+ '<iframe src="'
+			+ 'http://39.108.238.12/ssmws/'
+			+ '" scrolling="auto" style="width:100%;height:100%;border:0;" ></iframe></div>';
+		$('#tt').tabs('add', {
+			title: treeNode.name,
+			content: content,
+			closable: true,
+			tools: [{
+				iconCls: 'icon-mini-refresh',
+				handler: function () {
+					alert('refresh');
+				}
+			}]
+		});
+	}
+	var setting = {
+		data: {
+			simpleData: {
+				enable: true,
+				pIdKey: "pId"
+			},
+		},
+		callback: {
+			beforeClick: null,
+			onClick: oc
+		}
+	};
+	var treeNodes = [
+		{ "id": 1, "pId": 0, "name": "test1", "icon": "./ztree/img/diy/2.png", "click": true },
+		{ "id": 11, "pId": 1, "name": "test11" },
+		{ "id": 12, "pId": 1, "name": "test12" },
+		{ "id": 111, "pId": 11, "name": "test111" },
+		{ "id": 1111, "pId": 111, "name": "test1111", "url": "http://www.baidu.com" },
+		{ "id": 2, "pId": 0, "name": "test2" },
+		{ "id": 21, "pId": 2, "name": "test21" },
+		{ "id": 3, "pId": 0, "name": "test3" }
+	];
+	$(document).ready(function () {
+		$.fn.zTree.init($("#treeDemo"), setting, treeNodes);
+	});
+</script>
+
+</html>

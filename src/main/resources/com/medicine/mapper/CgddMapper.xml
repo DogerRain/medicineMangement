@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medicine.mapper.CgddMapper">
+	<select id="get" resultType="po.Cgdd" parameterType="int" flushCache="true" >
+		SELECT * FROM CGDD
+		WHERE ckid=#{cgdd}
+	</select>
+	
+	<select id="findPage" resultType="po.Cgdd"  parameterType="pagination.Page">
+		SELECT * FROM CGDD
+		<where>
+			<if test="params.ddid!=null">
+				AND DDID = #{params.ddid}
+			</if>
+			<if test="params.zgbm!=null">
+				AND ZGBM = #{params.zgbm}
+			</if>
+			<if test="params.gysbm!=null">
+				AND GYSBM = #{params.gysbm}
+			</if>
+		
+			<!-- <if test="params.sl!=null">
+				AND SL = #{params.sl}
+			</if> -->
+			<if test="params.ddrq1!=null">
+				AND DDRQ &gt;=#{params.ddrq1}
+			</if>
+			<if test="params.ddrq22!=null">
+				AND DDRQ &lt;=#{params.ddrq2}
+			</if>
+			<if test="params.ypbm!=null">
+				AND YPBM = #{params.ypbm}
+			</if>
+			<if test="params.ypmc!=null">
+				AND YPMC = #{params.ypmc}
+			</if>
+		</where>
+	</select>
+	<update id="update" parameterType="po.Cgdd">
+		UPDATE CGDD
+		SET YPBM=#{ypbm},YPMC=#{ypmc},SL=#{sl},DDRQ=#{ddrq},ZGBM=#{zgbm}
+		WHERE DDID=#{ddid}
+			
+	</update>
+	<insert id="insert" parameterType="po.Cgdd">
+	<selectKey keyProperty="ddid" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+		INSERT INTO CGDD(ZGBM,YPBM,YPMC,SL,GYSbM,DDRQ)
+		VALUES(#{zgbm},#{ypbm},#{ypmc},#{sl},#{gysbm},#{ddrq})
+	</insert>
+	<delete id="delete"  parameterType="Integer[]">
+		DELETE FROM CGDD
+		<where>
+			DDID
+			 <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+            	#{id}  
+        	</foreach>  
+		</where>	
+	</delete>
+	
+	
+</mapper>

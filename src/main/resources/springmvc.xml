@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+	<context:component-scan base-package="com.medicine.controller"></context:component-scan>
+	
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" 
+		/> <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" 
+		/> -->
+	
+	<!-- 文件上传 -->
+<!-- 	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	设置上传文件的最大尺寸为5MB
+		<property name="maxUploadSize">
+			<value>5242880</value>
+		</property>
+	</bean>  -->
+	
+	
+<!-- 	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		定义默认的异常处理页面
+		<property name="defaultErrorView" value="/index.jsp" />
+		定义异常处理页面用来获取异常信息的变量名，也可不定义，默认名为exception
+		<property name="exceptionAttribute" value="ex" />
+		定义需要特殊处理的异常，这是重要点
+		<property name="exceptionMappings">
+			<props>
+				<prop key="ssm.exception.CustomException">/WEB-INF/jsp/custom_error.jsp</prop>
+			</props>
+			还可以定义其他的自定义异常
+		</property>
+	</bean> -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/mobilelogin"/>
+			<bean class="interceptor.RequestLimit"></bean>
+			
+		</mvc:interceptor>
+	
+	</mvc:interceptors> -->
+	<!-- 格式转换 -->
+	<!-- 时间转换拦截器 -->
+	<!--注解适配器 -->
+	<mvc:annotation-driven conversion-service="conversionService">
+</mvc:annotation-driven>
+<!-- conversionService -->
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<!-- 转换器 -->
+		<property name="converters">
+			<list>
+				<bean class="converter.TimestampConverter"/>
+				<bean class="converter.DateConverter" />
+			</list>
+		</property>
+	</bean>
+
+</beans>

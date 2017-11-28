@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- 先引入 jquery的 js -->
+	<script type="text/javascript" src="easyui/js/jquery-1.8.0.min.js">
+	</script>
+	<!-- 引入 easyui的js -->
+	<script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+	<!-- 引入国际化 js -->
+	<script type="text/javascript" src="easyui/js/locale/easyui-lang-zh_CN.js"></script>
+	<!-- 引入 默认样式 css -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/default/easyui.css" />
+	<!-- 引入 icon图标 css  -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/icon.css" />
+	<link rel="stylesheet" type="text/css" href="easyui/ztree/zTreeStyle.css" />
+	<script type="text/javascript" src="easyui/ztree/jquery.ztree.all-3.5.js"></script>
+	<script>
+		$(function(){
+		$("body").css({visibility:"visible"});
+		function arrayToString(array, zd) {
+		var sum = '';
+		for (var i = 0; i < array.length; ++i) {
+			sum = sum + array[i][zd];
+			if (i < array.length - 1)
+				sum = sum + ',';
+		}
+		return sum;
+	}
+		var curr_time = new Date();
+	//	$('#yXRQ1').datebox('setValue', myformatter(curr_time));	
+	//	$('#yXRQ2').datebox('setValue', myformatter(curr_time));	
+
+	function doSearch() {
+		$('#dg').datagrid('load', {
+			good: '11'
+		});
+	}
+	function doDelete() {
+		// 先判断 用户是否选择
+		var array = $('#dg').datagrid('getSelections');
+		var ids = arrayToString(array, 'ddid');
+		alert(ids)
+		$('#ids').val(ids);
+		$("#delForm").submit();
+	}
+	var editrow = undefined;
+	$('#dg').datagrid({
+		fit: true,
+		url: 'Cgdd',
+		pagePosition: "bottom",
+		border: false,
+		rownumbers: true,
+		columns: [[
+			{
+				field: 'ddid',
+				title: '订单编码',
+				checkbox: true,
+				width: 100
+			},
+			{
+				field: 'zgbm',
+				title: '职工编码',
+				width: 100
+
+			},
+			{
+				field: 'gysbm',
+				title: '供应商编码',
+				width: 100
+
+
+			},
+			{
+				field: 'ypbm',
+				title: '药品编码',
+				width: 200
+			},
+			{
+				field: 'ypmc',
+				title: '药品名称',
+				width: 100
+
+			},
+			{
+				field: 'sl',
+				title: '药品数量',
+				width: 100
+
+			},
+			{
+				field: 'ddrq',
+				title: '订单日期',
+				width: 200,
+				formatter: function (value, row, index) {
+					if(value==null) return null;
+					var unixTimestamp = new Date(value.time);
+					return unixTimestamp.toLocaleString();
+				}
+			}
+		]],
+		queryParams: {
+			ddid: $("#ddid").val(),
+			zgbm: $("#zgbm").val(),
+			gysbm: $("#gysbm").val(),
+			sl: $('#sl').val(),
+			ypbm: $('#ypbm').val(),
+			ypmc: $('#ypmc').val(),
+			ddrq1: $('#ddrq1').val(),
+			ddrq2: $('#ddrq2').val()
+		},
+		toolbar: [{
+			iconCls: 'icon-edit',
+			handler: function () { alert('edit') }
+		}, {
+			iconCls: 'icon-add',
+			handler: function () {
+				$("#addWin").window('open')
+			}
+		}, {
+			iconCls: 'icon-save',
+			handler: function () {
+				//	alert(editrow)
+				// 索引1 代表第二行
+				var rs = $('#dg').datagrid('getRows');
+				var array = [{ id: 1, name: "math" }, { id: 2, name: "english" }];
+				for (var i = 0; i < array.length; ++i)
+					if (array[i].id == rs[editrow].child) {
+						rs[editrow].child = array[i];
+						break;
+					}
+				$('#dg').datagrid('endEdit', editrow);
+				alert(rs[editrow].code + " " + rs[editrow].name + " " + rs[editrow].child);
+				editrow = undefined;
+			}
+		}, {
+			iconCls: 'icon-cancel',
+			handler: function () {
+				doDelete();
+			}
+		}, {
+			iconCls: 'icon-search',
+			handler: function () {
+				$("#searchWin").window('open');
+			}
+		}],
+		pageList: [5, 10],
+		idField: "ckid",
+		pagination: true,
+		onDblClickRow: function (rowIndex, rowData) {
+			$("#updateWin").window('open');
+			$('#updateWin #ddid').val(rowData.ddid)
+			$('#updateWin #zgbm').val(rowData.zgbm)
+			$('#updateWin #gysbm').val(rowData.gysbm)
+			$('#updateWin #ypbm').val(rowData.ypbm)
+			$('#updateWin #ypmc').val(rowData.ypmc)
+			$('#updateWin #sl').val(rowData.sl)
+			
+			var unixTimestamp = new Date(rowData.ddrq.time);
+
+			$('#updateWin #ddrq').datebox('setValue', unixTimestamp.toLocaleString());
+
+		}
+
+	});
+		$('#search').click(function () {
+		console.log($('#ckrq1').val())
+		$('#dg').datagrid('load', {
+			ckid: $("#ddid").val(),
+			zgbm: $("#zgbm").val(),
+			gysbm: $("#gysbm").val(),
+		    sl:$("#sl").val(),
+			ypbm: $('#zgbm').val(),
+			ypmc:$('#ypmc').val(),
+			ddrq1: $('#ddrq1').datebox('getValue'),
+			ddrq2: $('#ddrq2').datebox('getValue')
+		});
+	})
+		
+		});
+	</script>
+	<title>Insert title here</title>
+</head>
+
+<body class="easyui-layout">
+	<div id="searchWin" class="easyui-window" title="Update" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+
+		<div region="center">
+			<div class="easyui-panel" title="New Topic" style="width:400px"></div>
+
+			<table cellpadding="5">
+				<tr>
+					<td>订单编号:</td>
+					<td>
+						<input id="ddid" class="easyui-textbox" type="text" name="ddid" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>订单负责人编码：</td>
+					<td>
+						<input id="zgbm" class="easyui-textbox" type="text" name="zgbm" data-options="required:true,validType:'email'" />
+					</td>
+				</tr>
+				<tr>
+					<td>供应商编码：</td>
+					<td>
+						<input id="gysbm" class="easyui-textbox" type="text" name="gysbm" data-options="required:true,validType:'email'" />
+					</td>
+				</tr>
+
+				<tr>
+					<td>药品编码:</td>
+					<td>
+						<input id="ypbm" class="easyui-textbox" type="text" name="ypbm" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品名称:</td>
+					<td>
+						<input id="ypmc" class="easyui-textbox" type="text" name="ypmc" data-options="required:true" />
+					</td>
+				</tr>
+
+				<tr>
+					<td>期(from):</td>
+					<td>
+						<input id="ddrq1" class="easyui-datetimebox" type="text" name="ddrq1" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>期(to):</td>
+					<td>
+						<input id="ddrq2" class="easyui-datetimebox" type="text" name="ddrq2" data-options="required:true" />
+					</td>
+				</tr>
+
+
+
+			</table>
+			<input id="page" name="page" value="1" type="hidden" />
+			<button href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" type="submit" id="search">Search</button>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">Print</a>
+
+		</div>
+
+	</div>
+	<div id="updateWin" class="easyui-window" title="Update" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+		<form action="updateCgdd">
+			<div region="center">
+				<div class="easyui-panel" title="New Topic" style="width:400px"></div>
+
+				<table cellpadding="5">
+					<tr>
+						<td>订单负责人编码:</td>
+						<td>
+							<input id="ddid" name="ddid" type="hidden" />
+							<input id="zgbm" class="easyui-textbox" type="text" name="zgbm" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>供应商编码:</td>
+						<td>
+							<input id="gysbm" class="easyui-textbox" type="text" name="gysbm" data-options="required:true" />
+							<!-- <input id="ypbm" class="easyui-combobox" name="ypbm"
+							data-options="valueField:'ypbm',textField:'ypbm',url:'findAllYpxx'"> -->
+						</td>
+					</tr>
+					<tr>
+						<td>订单日期：</td>
+						<td>
+							<input id="ddrq" class="easyui-datetimebox" type="text" name="ddrq" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品编码:</td>
+						<td>
+							<input id="ypbm" class="easyui-textbox" type="text" name="ypbm" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品名称:</td>
+						<td>
+							<input id="ypmc" class="easyui-textbox" type="text" name="ypmc" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品数量：</td>
+						<td>
+							<input id="sl" class="easyui-textbox" type="text" name="sl" data-options="required:true" />
+						</td>
+					</tr>
+				</table>
+				<input id="page" name="page" value="1" type="hidden" />
+				<button href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" type="submit" id="search">查找</button>
+				<!-- <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">Print</a> -->
+
+			</div>
+		</form>
+
+	</div>
+	<div id="addWin" class="easyui-window" title="Update" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+		<form action="addCgdd">
+			<div region="center">
+				<div class="easyui-panel" title="New Topic" style="width:400px"></div>
+
+				<table cellpadding="5">
+					<tr>
+						<td>职工编码:</td>
+						<td>
+							<input id="zgbm" class="easyui-textbox" type="text" name="zgbm" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>供应商编码:</td>
+						<td>
+							<input id="gysbm" class="easyui-textbox" type="text" name="gysbm" data-options="required:true" /><label id="checkypbm"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>订单日期：</td>
+						<td>
+							<input id="ddrq" class="easyui-datetimebox" type="text" name="ddrq" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品编码:</td>
+						<td>
+							<input id="ypbm" class="easyui-textbox" type="text" name="ypbm" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品名称:</td>
+						<td>
+							<input id="ypmc" class="easyui-textbox" type="text" name="ypmc" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品数量:</td>
+						<td>
+							<input id="sl" class="easyui-textbox" type="text" name="sl" data-options="required:true" />
+						</td>
+					</tr>
+				</table>
+				<input id="page" name="page" value="1" type="hidden" />
+				<button href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" type="submit" id="search">Search</button>
+				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">Print</a>
+
+			</div>
+		</form>
+
+	</div>
+
+	<div region="center" style="height:400px">
+		<form action="delCgdd" method="get" id="delForm" style="height:400px">
+			<table id="dg" class="easyui-datagrid"></table>
+			<input name="ids" id="ids" type="hidden" />
+		</form>
+	</div>
+
+
+
+</body>
+
+<script>
+	
+</script>
+<script type="text/javascript">
+	
+</script>
+<script>
+//检查药品编码
+$("#addWin #ypbm").blur(function (e) { 
+	e.preventDefault();
+	$.ajax({
+		type: "GET",
+		url: "checkypbm",
+		data: "ypbm="+$('#addWin #ypbm').val(),
+		success: function (response) {
+			$('#checkypbm').html(response)
+		}
+	});
+});
+
+	
+
+
+
+</script>
+
+</html>

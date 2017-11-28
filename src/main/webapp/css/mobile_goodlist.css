@@ -1,0 +1,104 @@
+.header1 {
+   width: 100%;
+   position: fixed;
+  
+
+   top: 0;
+   left: 0;
+   z-index: 100;
+}
+body{
+	height: 700px;
+    max-width: 640px;
+    min-width: 320px;
+   	padding: 0px;
+    margin: 0 auto;
+}
+.container-fluid1 {
+    height: 700px;
+    max-width: 640px;
+    min-width: 320px;
+    position: relative;
+    margin: 0 auto;
+    padding: 0px;
+}
+.header_box {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 640px;
+    min-width: 320px;
+    position: relative;
+    height: 50px;
+}
+.header_box > img {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+}
+.header_box > button{
+	top: 5px;
+	position: absolute;
+	right: 40px;
+
+}
+.header_box > .input-group{
+	width: 100%;
+	padding-left: 65px;
+	padding-right: 80px;
+	padding-top: 5px;
+}
+.carousel {
+    position: relative;
+   
+    margin: 0 auto;
+}
+.carousel-inner{
+	width: 100%;
+}
+.way {
+    width: 100%;
+    position: relative;
+    height: 70px;
+}
+.way > .form-control {
+    width: 150px;
+    position: absolute;
+    left: 5px;
+    top: 15px;
+}
+.form-control1 {
+    position: absolute;
+    left: 160px;
+    width: 50px;
+    top: 20px;
+}
+.form-control2 {
+    position: absolute;
+    left: 220px;
+    width: 50px;
+    top: 20px;
+}
+.way > button {
+    position: absolute;
+    left: 280px;
+    top: 15px;
+}
+.list-group-item{
+	position: relative;
+	height: 120px;
+}
+.goodimg {
+	position: absolute;
+    width: 100px;
+    height: 100px;
+}
+.good_inf {
+    padding-left: 120px;
+}
+.price {
+    position: absolute;
+    bottom: -10px;
+    left: 130px;
+}

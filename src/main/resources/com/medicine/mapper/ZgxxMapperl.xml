@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.medicine.mapper.ZgxxMapper">
+	<select id="get" resultType="po.Zgxx" parameterType="int" flushCache="true" >
+		SELECT * FROM ZGXX
+		WHERE ZGBM=#{zgbm}
+	</select>
+	
+	<select id="findPage" resultType="po.Zgxx"  parameterType="pagination.Page">
+		SELECT * FROM ZGXX
+		<where>
+			<if test="params.zgbm!=null">
+				AND ZGBM = #{params.zgbm}
+			</if>
+			<if test="params.zgmc!=null">
+				AND ZGMC LIKE #{params.zgmc}
+			</if>
+		
+		</where>
+	</select>
+	<update id="update" parameterType="po.Zgxx">
+		UPDATE ZGXX
+		SET ZGMC=#{zgmc}
+		WHERE zgbm=#{zgbm}
+			
+	</update>
+	<insert id="insert" parameterType="po.Zgxx">
+		INSERT INTO ZGXX
+		VALUES(#{zgbm},#{zgmc},#{zgmm})
+	</insert>
+	<delete id="delete"  parameterType="Integer[]">
+		DELETE FROM ZGXX
+		<where>
+			zgbm
+			 <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+            	#{id}  
+        	</foreach>  
+		</where>	
+	</delete>
+	
+	
+</mapper>

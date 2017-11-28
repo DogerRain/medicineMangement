@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- 先引入 jquery的 js -->
+	<script type="text/javascript" src="easyui/js/jquery-1.8.0.min.js">
+	</script>
+	<!-- 引入 easyui的js -->
+	<script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+	<!-- 引入国际化 js -->
+	<script type="text/javascript" src="easyui/js/locale/easyui-lang-zh_CN.js"></script>
+	<!-- 引入 默认样式 css -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/default/easyui.css" />
+	<!-- 引入 icon图标 css  -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/icon.css" />
+	<link rel="stylesheet" type="text/css" href="easyui/ztree/zTreeStyle.css" />
+	<script type="text/javascript" src="easyui/ztree/jquery.ztree.all-3.5.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/center.css" />
+	<title>Insert title here</title>
+</head>
+
+<body class="easyui-layout">
+	<div id="searchWin" class="easyui-window" title="查找供应商信息" data-options="iconCls:'icon-search',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+
+		<div region="center">
+			<div class="easyui-panel" title="" style="width:400px"></div>
+
+			<table cellpadding="5">
+				<tr>
+					<td>供应商编码:</td>
+					<td>
+						<input id="gysbm" class="easyui-textbox" type="text" name="gysbm" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>供应商名称：</td>
+					<td>
+						<input id="gysmc" class="easyui-textbox" type="text" name="gysmc" data-options="required:true,validType:'email'" />
+					</td>
+				</tr>
+				<tr>
+					<td>供应商负责人:</td>
+					<td>
+						<input id="gysfzr" class="easyui-textbox" type="text" name="gysfzr" data-options="required:true" />
+					</td>
+				</tr>
+				
+				<tr>
+					<td>供应商联系方式:</td>
+					<td>
+						<input id="gyslxfs" class="easyui-textbox" type="text" name="gyslxfs" data-options="required:true" />
+					</td>
+				</tr>
+				<tr>
+					<td>供应商地址:</td>
+					<td>
+						<input id="gysdz" class="easyui-textbox" type="text" name="gysdz" data-options="required:true"></input>
+					</td>
+				</tr>
+				
+				<!-- <tr>
+					<td>child:</td>
+					<td>
+						<select id="child" class="easyui-combobox" data-options="required:true,url:'combo.json',valueField:'id',textField:'name'"
+						 style="width:150px">
+						</select>
+					</td>
+				</tr> -->
+
+
+			</table>
+			<input id="page" name="page" value="1" type="hidden" />
+			<button href="#" class="easyui-linkbutton"  type="submit" id="search">查找</button>
+			<
+		</div>
+
+	</div>
+	<div id="updateWin" class="easyui-window" title="修改供应商信息" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+		<form action="updateGys">
+			<div region="center">
+				<div class="easyui-panel" title="" style="width:400px"></div>
+
+				<table cellpadding="5">
+					<tr>
+						<td>供应商编码:</td>
+						<td>
+							<input id="gysbm" class="easyui-textbox" type="text" name="gysbm" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>供应商名称：</td>
+						<td>
+							<input id="gysmc" class="easyui-textbox" type="text" name="gysmc" data-options="required:true,validType:'email'" />
+						</td>
+					</tr>
+					<tr>
+						<td>供应商负责人:</td>
+						<td>
+							<input id="gysfzr" class="easyui-textbox" type="text" name="gysfzr" data-options="required:true" /> 
+							
+						</td>
+					</tr>
+					<tr>
+						<td>供应商联系方式:</td>
+						<td>
+							<input id="gyslxfs" class="easyui-textbox" type="text" name="gyslxfs" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>供应商地址:</td>
+						<td>
+							<input id="gysdz" class="easyui-textbox" type="text" name="gysdz" data-options="required:true" />
+						</td>
+					</tr>
+				</table>
+				<input id="page" name="page" value="1" type="hidden" />
+				<button href="#" class="easyui-linkbutton" type="submit" id="search">修改</button>
+			<!-- 	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">Print</a> -->
+
+			</div>
+		</form>
+
+	</div>
+	<div id="addWin" class="easyui-window" title="添加供应商信息" data-options="iconCls:'icon-add',modal:true" closed="true" maximizable="false"
+	style="" collapsible="true" minimizable="true">
+	   <form action="addGys">
+		   <div region="center">
+			   <div class="easyui-panel" title="" style="width:400px"></div>
+
+			   <table cellpadding="5">
+				   <tr>
+					   <td>供应商编码:</td>
+					   <td>
+						   <input id="gysbm" class="easyui-textbox" type="text" name="gysbm" data-options="required:true" /><span id="ck"></span>
+					   </td>
+				   </tr>
+				   <tr>
+					   <td>供应商名称：</td>
+					   <td>
+						   <input id="gysmc" class="easyui-textbox" type="text" name="gysmc" data-options="required:true,validType:'email'" />
+					   </td>
+				   </tr>
+				   <tr>
+					   <td>供应商负责人:</td>
+					   <td>
+						   <input id="gysfzr" class="easyui-textbox" type="text" name="gysfzr" data-options="required:true" />
+						 
+						
+					   </td>
+				   </tr>
+				   <tr>
+					   <td>供应商联系方式:</td>
+					   <td>
+						   <input id="gyslxfs" class="easyui-textbox" type="text" name="gyslxfs" data-options="required:true" />
+					   </td>
+				   </tr>
+				   <tr>
+					   <td>供应商地址:</td>
+					   <td>
+						   <input id="gysdz" class="easyui-textbox" type="text" name="gysdz" data-options="required:true" />
+					   </td>
+				   </tr>
+			   </table>
+			   <input id="page" name="page" value="1" type="hidden" />
+			   <button href="#" class="easyui-linkbutton"  type="submit" id="search">增加</button>
+			   <!-- <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'">Print</a> -->
+
+		   </div>
+	   </form>
+
+   </div>
+
+	<div region="center" style="height:400px">
+		<form action="delGys" method="get" id="delForm" style="height:400px">
+			<table id="dg" class="easyui-datagrid"></table>
+			<input name="ids" id="ids" type="hidden"/>
+		</form>
+	</div>
+
+
+
+</body>
+<script>
+	// function myformatter(date) {
+	// 	var y = date.getFullYear();
+	// 	var m = date.getMonth() + 1;
+	// 	var d = date.getDate();
+	// 	return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+	// }
+
+	// function myparser(s) {
+	// 	if (!s) return new Date();
+	// 	var ss = (s.split('-'));
+	// 	var y = parseInt(ss[0], 10);
+	// 	var m = parseInt(ss[1], 10);
+	// 	var d = parseInt(ss[2], 10);
+	// 	if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+	// 		return new Date(y, m - 1, d);
+	// 	} else {
+	// 		return new Date();
+	// 	}
+	// }
+	function arrayToString(array,zd){
+		var sum='';
+		for(var i=0;i<array.length;++i){
+			sum=sum+array[i][zd];
+			if(i<array.length-1)
+				sum=sum+',';
+		}
+		return sum;
+	}
+
+</script>
+<script>
+		//var curr_time = new Date();
+		//	$('#gysdz1').datebox('setValue', myformatter(curr_time));	
+		//	$('#gysdz2').datebox('setValue', myformatter(curr_time));	
+
+		// function doSearch() {
+		// 	$('#dg').datagrid('load', {
+		// 		good: '11'
+		// 	});
+		// }
+		function doDelete() {
+			// 先判断 用户是否选择
+			var array = $('#dg').datagrid('getSelections');
+			if(array==null||array.length==0){
+			  $.messager.alert('警告','请选择删除的列','info');
+			  return;
+			  }
+				
+			var ids=arrayToString(array,'gysbm');
+			if(confirm("确定删除？")){
+			$('#ids').val(ids);
+			$("#delForm").submit();
+			}
+		}
+		var editrow = undefined;
+		$('#dg').datagrid({
+			fit: true,
+			url: 'Gys',
+			pagePosition: "bottom",
+			border: false,
+			rownumbers: true,
+			columns: [[
+				{
+					field: 'ck',
+					checkbox:true,
+					width: 100
+				},
+				{
+					field: 'gysbm',
+					title: '供应商编码',
+					width: 100
+				},
+				
+				{
+					field: 'gysmc',
+					title: '供应商名称',
+					width: 100,
+
+				},
+				{
+					field: 'gysfzr',
+					title: '供应商负责人',
+					width: 100
+					
+
+				},
+				{
+					field: 'gyslxfs',
+					title: '供应商联系方式',
+					width: 100,
+
+				},
+				{
+					field: 'gysdz',
+					title: '供应商地址',
+					width: 200
+
+				}
+			]],
+			queryParams: {
+				gysbm: $("#gysbm").val(),
+				gysmc: $("#gysmc").val(),
+				gysfzr: $("#gysfzr").val(),
+				gysdz: $('#gysdz').val(),
+				gyslxfs:$('#gyslxfs').val()
+			},
+			toolbar: [{
+			iconCls: 'icon-add',
+			handler: function () {
+				$("#addWin").window('open')
+			}
+		},  {
+			iconCls: 'icon-cancel',
+			handler: function () {
+				doDelete();
+			}
+		}, {
+			iconCls: 'icon-search',
+			handler: function () {
+				$("#searchWin").window('open');
+			}
+		}],
+			pageList: [5, 10],
+			idField: "gysbm",
+			pagination: true,
+			onDblClickRow: function (rowIndex, rowData) {
+				$("#updateWin").window('open');
+				$('#updateWin #gysbm').val(rowData.gysbm)
+				$('#updateWin #gysmc').val(rowData.gysmc)
+				$('#updateWin #gyslxfs').val(rowData.gyslxfs)
+				$('#updateWin #gysfzr').val(rowData.gysfzr)		
+				$('#updateWin #gysdz').val(rowData.gysdz)
+
+			}
+			
+		});
+</script>
+<script type="text/javascript">
+	$('#search').click(function () {
+		console.log($('#gysdz1'))
+		$('#dg').datagrid('load', {
+			gysbm: $("#gysbm").val(),
+			gysmc: $("#gysmc").val(),
+			gysfzr: $("#gysfzr").val(),
+			gysdz: $('#gysdz').val(),
+			gyslxfs:$('#gyslxfs').val()
+			
+		});
+	});
+	
+	var ti=new Date();
+	$("#addWin #gysbm").val(ti.getTime()%10000000000);
+	$("#addWin #gysbm").blur(function(){
+		$.ajax({
+		type: "GET",
+		url: "checkgys",
+		data: "gysbm="+$('#addWin #gysbm').val(),
+		success: function (response) {
+				$("#ck").html(response);
+				
+			
+		}
+	});
+	
+	
+	})
+	
+	
+	
+</script>
+
+</html>

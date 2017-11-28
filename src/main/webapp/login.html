@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登录</title>
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
+	<link href="css/signin.css" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" href="./images/bitbug_favicon.ico" >
+	<link rel="icon" type="image/x-icon" href="./images/药.png" />
+	<script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+</head>
+<body>
+	<div class="htmleaf-container">
+		<header class="htmleaf-header">
+			<h1>欢迎使用药品库存管理系统</h1>
+			<!-- <div class="htmleaf-links">
+				<a class="htmleaf-icon icon-htmleaf-home-outline" href="http://www.htmleaf.com/" title="jQuery之家" target="_blank"><span> jQuery之家</span></a>
+				<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="http://www.htmleaf.com/css3/ui-design/201612274287.html" title="返回下载页" target="_blank"><span> 返回下载页</span></a>
+			</div> -->
+		</header>
+		<div class="signin">
+			<div class="signin-head"><img src="images/test/医院.png" alt="" class="img-circle"></div>
+			<form class="form-signin" role="form" action="login" method="post">
+				<input type="text" class="form-control" name="zgbm"  placeholder="用户名" required autofocus />
+				<input type="password" class="form-control" id="mm" name="zgmm" placeholder="密码" required /><span id="show">show</span>
+				<button  type="submit">登录</button>
+				<label class="checkbox">
+					<input type="checkbox" value="remember-me"> 记住我
+				</label>
+			</form>
+		</div>
+	</div>
+	
+</body>
+</html>
+<script>
+$("#show").click(function(){
+	$("#mm").attr('type','text');
+	
+	
+})
+$("#mm").click(function(){
+$("#mm").attr('type','password');
+});
+
+</script>

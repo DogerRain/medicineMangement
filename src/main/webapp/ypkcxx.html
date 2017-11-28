@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- 先引入 jquery的 js -->
+	<script type="text/javascript" src="easyui/js/jquery-1.8.0.min.js">
+	</script>
+	<!-- 引入 easyui的js -->
+	<script type="text/javascript" src="easyui/js/jquery.easyui.min.js"></script>
+	<!-- 引入国际化 js -->
+	<script type="text/javascript" src="easyui/js/locale/easyui-lang-zh_CN.js"></script>
+	<!-- 引入 默认样式 css -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/default/easyui.css" />
+	<!-- 引入 icon图标 css  -->
+	<link rel="stylesheet" type="text/css" href="easyui/js/themes/icon.css" />
+	<link rel="stylesheet" type="text/css" href="easyui/ztree/zTreeStyle.css" />
+	<script type="text/javascript" src="easyui/ztree/jquery.ztree.all-3.5.js"></script>
+	<script type="text/javascript" src="js/easyui-js.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/center.css" />
+	<title>Insert title here</title>
+</head>
+
+<body class="easyui-layout">
+	<div id="searchWin" class="easyui-window" title="查找药品" data-options="iconCls:'icon-search',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+
+		<div region="center">
+			<div class="easyui-panel" title="" style="width:400px"></div>
+
+			<table cellpadding="5">
+				<tr>
+					<td>药品编码:</td>
+					<td>
+						<input id="yPBM" class="easyui-validatebox" type="text" name="yPBM" data-options="validType:'integer'" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品名称：</td>
+					<td>
+						<input id="yPMC" class="easyui-validatebox" type="text" name="yPMC" data-options="" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品剂型:</td>
+					<td>
+						<input id="yPJX" class="easyui-validatebox" type="text" name="yPJX" data-options="validType:'integer'" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品数量:</td>
+					<td>
+						<input id="yPSJ1" class="easyui-validatebox" type="text" name="yPSJ1" data-options="validType:'integer'" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品数量:</td>
+					<td>
+						<input id="yPSJ2" class="easyui-validatebox" type="text" name="yPSJ2" data-options="validType:'integer'" />
+					</td>
+				</tr>
+				<tr>
+					<td>药品有效期(from):</td>
+					<td>
+						<input id="yXRQ1" class="easyui-datetimebox" type="text" name="yXRQ1" data-options=""></input>
+					</td>
+				</tr>
+				<tr>
+					<td>药品有效期(to):</td>
+					<td>
+						<input id="yXRQ2" class="easyui-datetimebox" type="text" name="yXRQ2" data-options=""></input>
+					</td>
+				</tr>
+				<!-- <tr>
+					<td>child:</td>
+					<td>
+						<select id="child" class="easyui-combobox" data-options="required:true,url:'combo.json',valueField:'id',textField:'name'"
+						 style="width:150px">
+						</select>
+					</td>
+				</tr> -->
+
+
+			</table>
+			<input id="page" name="page" value="1" type="hidden" />
+			<button href="#" class="easyui-linkbutton"  type="submit" id="search">查找</button>
+			
+
+		</div>
+
+	</div>
+	<div id="updateWin" class="easyui-window" title="修改药品信息" data-options="iconCls:'icon-save',modal:true" closed="true" maximizable="false"
+	 style="" collapsible="true" minimizable="true">
+		<form action="updateYpkcxx">
+			<div region="center">
+				<div class="easyui-panel" title="" style="width:400px"></div>
+
+				<table cellpadding="5">
+					<tr>
+						<td>药品编码:</td>
+						<td>
+							<input id="yPBM" class="easyui-validatebox" type="text" name="yPBM" data-options="required:true,validType:'integer'" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品名称：</td>
+						<td>
+							<input id="yPMC" class="easyui-validatebox" type="text" name="yPMC" data-options="required:true" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品剂型:</td>
+						<td>
+							<!-- <input id="yPJX" class="easyui-validatebox" type="text" name="yPJX" data-options="required:true" /> -->
+							<input id="yPJX" class="easyui-combobox" name="yPJX"
+							data-options="valueField:'id',textField:'name',url:'json/combo.json'">
+
+						</td>
+					</tr>
+					<tr>
+						<td>药品数量:</td>
+						<td>
+							<input id="yPSL" class="easyui-validatebox" type="text" name="yPSL" data-options="required:true,validType:'integer'" />
+						</td>
+					</tr>
+					<tr>
+						<td>药品有效期:</td>
+						<td>
+							<input id="yXRQ" class="easyui-datetimebox" type="text" name="yXRQ" data-options="required:true" />
+						</td>
+					</tr>
+				</table>
+				<input id="page" name="page" value="1" type="hidden" />
+				<button href="#" class="easyui-linkbutton"  type="submit" id="search">修改</button>
+				
+
+			</div>
+		</form>
+
+	</div>
+	<div id="addWin" class="easyui-window" title="添加药品" data-options="iconCls:'icon-add',modal:true" closed="true" maximizable="false"
+	style="" collapsible="true" minimizable="true">
+	   <form action="addYpkcxx">
+		   <div region="center">
+			   <div class="easyui-panel" title="" style="width:400px"></div>
+
+			   <table cellpadding="5">
+				  <!--  <tr>
+					   <td>药品编码:</td>
+					   <td>
+						   <input id="yPBM" class="easyui-validatebox" type="text" name="yPBM" data-options="required:true" />
+					   </td>
+				   </tr> -->
+				   <tr>
+					   <td>药品名称：</td>
+					   <td>
+						   <input id="yPMC" class="easyui-validatebox" type="text" name="yPMC" data-options="required:true" />
+					   </td>
+				   </tr>
+				   <tr>
+					   <td>药品剂型:</td>
+					   <td>
+						   <!-- <input id="yPJX" class="easyui-validatebox" type="text" name="yPJX" data-options="required:true" />
+						 -->
+						 <input id="yPJX" class="easyui-combobox" name="yPJX" value="-1"
+						 data-options="valueField:'id',textField:'name',url:'json/combo.json'">
+					   </td>
+				   </tr>
+				   <tr>
+					   <td>药品数量:</td>
+					   <td>
+						   <input id="yPSL" class="easyui-validatebox" type="text" name="yPSL" data-options="required:true" />
+					   </td>
+				   </tr>
+				   <tr>
+					   <td>药品有效期:</td>
+					   <td>
+						   <input id="yXRQ" class="easyui-datetimebox" type="text" name="yXRQ" data-options="required:true" />
+					   </td>
+				   </tr>
+			   </table>
+			   <input id="page" name="page" value="1" type="hidden" />
+			   <button href="#" class="easyui-linkbutton"  type="submit" id="search">增加</button>
+			
+
+		   </div>
+	   </form>
+
+   </div>
+
+	<div region="center" style="height:400px">
+		<form action="delYpkcxx" method="get" id="delForm" style="height:400px">
+			<table id="dg" class="easyui-datagrid"></table>
+			<input name="ids" id="ids" type="hidden"/>
+		</form>
+	</div>
+
+
+
+</body>
+<script>
+	function myformatter(date) {
+		var y = date.getFullYear();
+		var m = date.getMonth() + 1;
+		var d = date.getDate();
+		return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+	}
+
+	function myparser(s) {
+		if (!s) return new Date();
+		var ss = (s.split('-'));
+		var y = parseInt(ss[0], 10);
+		var m = parseInt(ss[1], 10);
+		var d = parseInt(ss[2], 10);
+		if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+			return new Date(y, m - 1, d);
+		} else {
+			return new Date();
+		}
+	}
+	function arrayToString(array,zd){
+		var sum='';
+		for(var i=0;i<array.length;++i){
+			sum=sum+array[i][zd];
+			if(i<array.length-1)
+				sum=sum+',';
+		}
+		return sum;
+	}
+
+</script>
+<script>
+		var curr_time = new Date();
+		//	$('#yXRQ1').datebox('setValue', myformatter(curr_time));	
+		//	$('#yXRQ2').datebox('setValue', myformatter(curr_time));	
+
+		function doSearch() {
+			$('#dg').datagrid('load', {
+				good: '11'
+			});
+		}
+		function doDelete() {
+			// 先判断 用户是否选择
+			var array = $('#dg').datagrid('getSelections');
+			if(array==null||array.length==0){
+			  $.messager.alert('警告','请选择删除的列','info');
+			  return;
+			}
+			
+			var ids=arrayToString(array,'yPBM');
+			if(confirm("确定删除？")){
+			$('#ids').val(ids);
+			$("#delForm").submit();
+			}
+		}
+		var editrow = undefined;
+		$('#dg').datagrid({
+			fit: true,
+			url: 'Ypkcxx',
+			pagePosition: "bottom",
+			border: false,
+			rownumbers: true,
+			columns: [[
+				{
+					field: 'ck',
+					checkbox: true,
+					width: 100
+				},
+				{
+					field: 'yPBM',
+					title: '药品编码',
+					width: 100
+				},
+				{
+					field: 'yPMC',
+					title: '药品名称',
+					width: 100,
+
+				},
+				{
+					field: 'yPJX',
+					title: '药品剂型',
+					width: 100,
+					formatter: function (value, row, index) {
+						var out;
+						switch(value){
+							case 0:out='散剂'; break;
+							case 1:out='片剂';break;
+							case 2:out='颗粒剂';break;
+							case 3: out='胶囊剂';break;
+							case 4:out='溶液剂';break;
+							case 5:out='其他';
+						}
+						return out;
+					}
+
+				},
+				{
+					field: 'yPSL',
+					title: '药品数量',
+					width: 100,
+
+				},
+				{
+					field: 'yXRQ',
+					title: '药品有效期',
+					width: 200,
+					formatter: function (value, row) {
+						try{
+						var unixTimestamp = new Date(value.time);
+						return unixTimestamp.toLocaleString();
+						}catch(e){
+							return null;
+						}
+						
+					}
+
+				}
+			]],
+			queryParams: {
+				yPBM: $("#yPBM").val(),
+				yPMC: $("#yPMC").val(),
+				yPJX: $("#yPJX").val(),
+				yPSJ1: $('#yPSJ1').val(),
+				yPSJ2: $('#yPSJ2').val(),
+				yXRQ1: $('#yXRQ1').val(),
+				yXRQ2: $('#yXRQ2').val()
+			},
+			
+			toolbar: [{
+			iconCls: 'icon-add',
+			handler: function () {
+				$("#addWin").window('open')
+			}
+		},  {
+			iconCls: 'icon-cancel',
+			handler: function () {
+				doDelete();
+			}
+		}, {
+			iconCls: 'icon-search',
+			handler: function () {
+				$("#searchWin").window('open');
+			}
+		}],
+			pageList: [5, 10],
+			idField: "yPBM",
+			pagination: true,
+			onDblClickRow: function (rowIndex, rowData) {
+				$("#updateWin").window('open');
+				$('#updateWin #yPBM').val(rowData.yPBM)
+				$('#updateWin #yPMC').val(rowData.yPMC)
+				$('#updateWin #yPSL').val(rowData.yPSL)
+			//	$('#updateWin #yPJX').val(rowData.yPJX)
+				$('#updateWin #yPJX').combobox('setValue', rowData.yPJX);
+				var unixTimestamp = new Date(rowData.yXRQ.time);
+				
+				$('#updateWin #yXRQ').datebox('setValue', unixTimestamp.toLocaleString());	
+
+			}
+			
+		});
+</script>
+<script type="text/javascript">
+	$('#search').click(function () {
+		console.log($('#yXRQ1'))
+		$('#dg').datagrid('load', {
+			yPBM: $("#yPBM").val(),
+			yPMC: $("#yPMC").val(),
+			yPJX: $("#yPJX").val(),
+			yPSJ1: $('#yPSJ1').val(),
+			yPSJ2: $('#yPSJ2').val(),
+			yXRQ1: $('#yXRQ1').datebox('getValue'),
+			yXRQ2: $('#yXRQ2').datebox('getValue')
+		});
+	})
+</script>
+
+</html>
