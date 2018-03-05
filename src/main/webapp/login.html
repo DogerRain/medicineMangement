@@ -7,6 +7,7 @@
 	<title>登录</title>
 	<link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
+	<link rel="stylesheet" type="text/css" href="css/center.css">
 	<link href="css/signin.css" rel="stylesheet">
 	<link rel="icon" type="image/x-icon" href="./images/bitbug_favicon.ico" >
 	<link rel="icon" type="image/x-icon" href="./images/药.png" />
@@ -20,12 +21,17 @@
 		<div class="signin">
 			<div class="signin-head"><img src="images/test/医院.png" alt="" class="img-circle"></div>
 			<form class="form-signin" role="form" action="login" method="post">
-				<input type="text" class="form-control" name="zgbm"  placeholder="用户名" required autofocus />
-				<input type="password" class="form-control" id="mm" name="zgmm" placeholder="密码" required />
+				<input type="text" class="form-control"  id="userId" name="userId"  placeholder="用户名" required autofocus />
+				<input type="password" class="form-control" id="password" name="password" placeholder="密码" required />
+			<div class="center">
+			<label class="radio-inline">
+				<input type="radio" name="usertype" id="usertype" value="tech" checked> 教师
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="usertype" id="usertype"  value="admin"> 管理员
+			</label>
+			</div>
 				<button  type="submit">登录</button>
-				<label class="checkbox">
-					<input type="checkbox" value="remember-me"> 记住我
-				</label>
 			</form>
 		</div>
 	</div>
