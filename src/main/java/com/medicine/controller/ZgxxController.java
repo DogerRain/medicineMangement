@@ -51,17 +51,7 @@ public class ZgxxController extends BaseController {
 		zgxxService.delZgxx(integers);
 		response.sendRedirect("zgxx.html");
 	}
-	@RequestMapping("/login")
-	public void login(Integer zgbm,String zgmm,HttpServletResponse response,HttpSession session ) throws IOException{
-		Zgxx zgxx=zgxxService.getZgxx(zgbm);
-		if(zgxx==null||!zgmm.equals(zgxx.getZgmm())){
-			response.sendRedirect("login.html");
-		}
-		else{
-			session.setAttribute("user", zgxx);
-			response.sendRedirect("medicine.jsp");
-		}
-	}
+	
 	@RequestMapping("/outLogin")
 	public void outlogin(HttpServletResponse response,HttpSession session ) throws IOException{
 			session.removeAttribute("user");
